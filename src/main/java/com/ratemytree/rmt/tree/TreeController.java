@@ -17,20 +17,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/trees")
 public class TreeController {
 
-    private static final String TREE_COLLECTION = "tree";
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private TreeRepository treeRepository;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> createTree(@RequestBody String tree){
-        mongoTemplate.save(tree, TREE_COLLECTION);
-        return new ResponseEntity<>(tree, HttpStatus.CREATED);
+    public ResponseEntity<Tree> createTree(@RequestBody String tree) {
+        Tree savedTree = treeRepository.save(new Tree(tree));
+        return new ResponseEntity<>(savedTree, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<String> getTree(@PathVariable String id) {
-        String tree = mongoTemplate.findById(id, String.class, TREE_COLLECTION);
+    public ResponseEntity<Tree> getTree(@PathVariable String id) {
+        Tree tree = treeRepository.findOne(id);
         return new ResponseEntity<>(tree, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/{id}/vote", method = RequestMethod.POST)
+    public ResponseEntity<Tree> voteForTree(@PathVariable String id) {
+        Tree tree = treeRepository.findOne(id);
+        tree.incrementVote();
+        Tree updatedTree = treeRepository.save(tree);
+        return new ResponseEntity<>(updatedTree, HttpStatus.OK);
+    }
+
 }
