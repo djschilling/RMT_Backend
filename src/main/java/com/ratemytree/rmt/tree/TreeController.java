@@ -18,26 +18,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class TreeController {
 
 
+    private TreeService treeService;
+
     @Autowired
-    private TreeRepository treeRepository;
+    public TreeController(TreeService treeService) {
+        this.treeService = treeService;
+    }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Tree> createTree(@RequestBody String tree) {
-        Tree savedTree = treeRepository.save(new Tree(tree));
+        Tree savedTree = treeService.create(tree);
         return new ResponseEntity<>(savedTree, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Tree> getTree(@PathVariable String id) {
-        Tree tree = treeRepository.findOne(id);
+        Tree tree = treeService.findById(id);
         return new ResponseEntity<>(tree, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/vote", method = RequestMethod.POST)
     public ResponseEntity<Tree> voteForTree(@PathVariable String id) {
-        Tree tree = treeRepository.findOne(id);
-        tree.incrementVote();
-        Tree updatedTree = treeRepository.save(tree);
+        Tree updatedTree = treeService.voteForTree(id);
         return new ResponseEntity<>(updatedTree, HttpStatus.OK);
     }
 
