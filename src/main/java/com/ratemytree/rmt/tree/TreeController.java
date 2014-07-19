@@ -1,5 +1,6 @@
 package com.ratemytree.rmt.tree;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,12 @@ public class TreeController {
     public ResponseEntity<Tree> voteForTree(@PathVariable String id) {
         Tree updatedTree = treeService.voteForTree(id);
         return new ResponseEntity<>(updatedTree, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<Tree>> getTreesByVotes() {
+        List<Tree> trees = treeService.findTreesByVotes();
+        return new ResponseEntity<>(trees, HttpStatus.OK);
     }
 
 }
