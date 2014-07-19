@@ -16,13 +16,13 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @Configuration
 @EnableMongoRepositories(basePackages = "com.ratemytree.rmt")
 public class MongoDBConfig {
-
-    public @Bean
+    @Bean
+    public
     MongoClient mongo() throws Exception {
         return new MongoClient("localhost");
     }
-
-    public @Bean MongoTemplate mongoTemplate() throws Exception {
+    @Bean
+    public MongoTemplate mongoTemplate() throws Exception {
         return new MongoTemplate(mongo(), "mydb");
     }
 }
