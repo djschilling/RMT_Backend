@@ -1,6 +1,8 @@
 RMT_Backend
 ===========
 
+[![Build Status](https://travis-ci.org/pongo710/RMT_Backend.svg?branch=master)](https://travis-ci.org/pongo710/RMT_Backend)
+
 Required
 --------
 * mongodb on localhost
