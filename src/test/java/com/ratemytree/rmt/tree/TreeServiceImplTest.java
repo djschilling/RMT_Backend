@@ -8,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -29,8 +30,15 @@ public class TreeServiceImplTest {
     @Test
     public void voteForTree() {
         Tree tree = new Tree();
-        tree.incrementVote();
+        Tree incrementedVotesTree = new Tree();
+        incrementedVotesTree.incrementVote();
+        when(treeRepositoryMock.findOne("5")).thenReturn(tree);
+        when(treeRepositoryMock.save(incrementedVotesTree)).thenReturn(incrementedVotesTree);
 
-        assertThat(tree.getVotes(), is(1));
+        Tree updatedTree = sut.voteForTree("5");
+
+        assertThat(updatedTree.getVotes(), is(1));
     }
+
+
 }
