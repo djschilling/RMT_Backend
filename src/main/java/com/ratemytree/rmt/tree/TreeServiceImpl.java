@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TreeServiceImpl implements TreeService {
 
-    private TreeRepository treeRepository;
+    private final TreeRepository treeRepository;
 
     @Autowired
     public TreeServiceImpl(TreeRepository treeRepository) {

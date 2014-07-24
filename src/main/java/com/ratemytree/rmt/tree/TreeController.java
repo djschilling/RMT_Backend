@@ -1,8 +1,9 @@
 package com.ratemytree.rmt.tree;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 /**
  * David Schilling - davejs92@gmail.com
  */
@@ -18,8 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/trees")
 public class TreeController {
 
-
-    private TreeService treeService;
+    private final TreeService treeService;
 
     @Autowired
     public TreeController(TreeService treeService) {
@@ -49,5 +51,4 @@ public class TreeController {
         List<Tree> trees = treeService.findTreesByVotes();
         return new ResponseEntity<>(trees, HttpStatus.OK);
     }
-
 }
