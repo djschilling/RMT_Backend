@@ -23,7 +23,7 @@ public class TreeServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        sut = new TreeServiceImpl(treeRepositoryMock);
+        sut = new TreeServiceImpl(treeRepositoryMock, null);
 
     }
 

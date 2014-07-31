@@ -1,5 +1,6 @@
 package com.ratemytree.rmt.tree;
 
+import com.ratemytree.rmt.user.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,15 +13,17 @@ import org.springframework.stereotype.Service;
 public class TreeServiceImpl implements TreeService {
 
     private final TreeRepository treeRepository;
+    private final UserService userService;
 
     @Autowired
-    public TreeServiceImpl(TreeRepository treeRepository) {
+    public TreeServiceImpl(TreeRepository treeRepository, UserService userService) {
         this.treeRepository = treeRepository;
+        this.userService = userService;
     }
 
     @Override
     public Tree create(String content) {
-        return treeRepository.save(new Tree(content));
+        return treeRepository.save(new Tree(content, userService.getCurrentlyLoggedIn().getUsername()));
     }
 
     @Override

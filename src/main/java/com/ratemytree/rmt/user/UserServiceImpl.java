@@ -1,6 +1,7 @@
 package com.ratemytree.rmt.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -31,4 +32,10 @@ public class UserServiceImpl implements UserService {
     public void createUser(String username, String email, String password) {
         userRepository.save(new User(username, email, password));
     }
+
+    @Override
+    public User getCurrentlyLoggedIn() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
 }

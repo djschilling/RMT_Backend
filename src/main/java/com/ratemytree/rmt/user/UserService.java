@@ -1,5 +1,6 @@
 package com.ratemytree.rmt.user;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -8,4 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService{
 
     void createUser(String username, String email, String password);
+
+    public User getCurrentlyLoggedIn();
+
 }

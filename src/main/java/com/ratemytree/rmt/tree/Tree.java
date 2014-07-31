@@ -15,6 +15,8 @@ public class Tree {
     @Id
     private String id;
     @Field
+    private String creator;
+    @Field
     private int votesUp;
     @Field
     private int votesDown;
@@ -26,8 +28,9 @@ public class Tree {
         //default constructor needed
     }
 
-    public Tree(String content) {
+    public Tree(String content, String creator) {
         this.content = (DBObject)JSON.parse(content);
+        this.creator = creator;
     }
 
     public int incrementVotesUp() {
@@ -52,6 +55,10 @@ public class Tree {
 
     public DBObject getContent() {
         return content;
+    }
+
+    public String getCreator() {
+        return creator;
     }
 
     @Override
