@@ -13,7 +13,9 @@ public interface TreeService {
 
     Tree findById(String id);
 
-    Tree voteForTree(String id);
+    Tree voteUpForTree(String id);
+
+    Tree voteDownForTree(String id);
 
     List<Tree> findTreesByVotes();
 }

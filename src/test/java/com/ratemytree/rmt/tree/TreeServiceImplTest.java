@@ -28,16 +28,16 @@ public class TreeServiceImplTest {
     }
 
     @Test
-    public void voteForTree() {
+    public void voteUpForTree() {
         Tree tree = new Tree();
         Tree incrementedVotesTree = new Tree();
-        incrementedVotesTree.incrementVote();
+        incrementedVotesTree.incrementVotesUp();
         when(treeRepositoryMock.findOne("5")).thenReturn(tree);
         when(treeRepositoryMock.save(incrementedVotesTree)).thenReturn(incrementedVotesTree);
 
-        Tree updatedTree = sut.voteForTree("5");
+        Tree updatedTree = sut.voteUpForTree("5");
 
-        assertThat(updatedTree.getVotes(), is(1));
+        assertThat(updatedTree.getVotesUp(), is(1));
     }
 
 

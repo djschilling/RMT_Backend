@@ -34,15 +34,23 @@ public class TreeServiceImpl implements TreeService {
     }
 
     @Override
-    public Tree voteForTree(String id) {
+    public Tree voteUpForTree(String id) {
         Tree tree = treeRepository.findOne(id);
-        tree.incrementVote();
+        tree.incrementVotesUp();
         return  treeRepository.save(tree);
     }
 
     @Override
+    public Tree voteDownForTree(String id) {
+        Tree tree = treeRepository.findOne(id);
+        tree.incrementVotesDown();
+        return  treeRepository.save(tree);
+    }
+
+
+    @Override
     public List<Tree> findTreesByVotes() {
-        Sort votesSort = new Sort(Sort.Direction.DESC, "votes");
+        Sort votesSort = new Sort(Sort.Direction.DESC, "votesUp");
         return treeRepository.findAll(votesSort);
     }
 }

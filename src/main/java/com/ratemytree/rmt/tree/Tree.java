@@ -15,7 +15,9 @@ public class Tree {
     @Id
     private String id;
     @Field
-    private int votes;
+    private int votesUp;
+    @Field
+    private int votesDown;
     @Field
     private DBObject content;
 
@@ -28,16 +30,24 @@ public class Tree {
         this.content = (DBObject)JSON.parse(content);
     }
 
-    public int incrementVote() {
-        return ++votes;
+    public int incrementVotesUp() {
+        return ++votesUp;
+    }
+
+    public int incrementVotesDown() {
+        return ++votesDown;
     }
 
     public String getId() {
         return id;
     }
 
-    public int getVotes() {
-        return votes;
+    public int getVotesUp() {
+        return votesUp;
+    }
+
+    public int getVotesDown() {
+        return votesDown;
     }
 
     public DBObject getContent() {
@@ -51,7 +61,8 @@ public class Tree {
 
         Tree tree = (Tree) o;
 
-        if (votes != tree.votes) return false;
+        if (votesDown != tree.votesDown) return false;
+        if (votesUp != tree.votesUp) return false;
         if (content != null ? !content.equals(tree.content) : tree.content != null) return false;
         if (id != null ? !id.equals(tree.id) : tree.id != null) return false;
 
@@ -61,9 +72,20 @@ public class Tree {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + votes;
+        result = 31 * result + votesUp;
+        result = 31 * result + votesDown;
         result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Tree{" +
+                "id='" + id + '\'' +
+                ", votesUp=" + votesUp +
+                ", votesDown=" + votesDown +
+                ", content=" + content +
+                '}';
     }
 }
 

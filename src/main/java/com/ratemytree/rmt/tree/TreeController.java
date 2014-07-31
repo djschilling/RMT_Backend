@@ -1,8 +1,6 @@
 package com.ratemytree.rmt.tree;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +38,18 @@ public class TreeController {
         return new ResponseEntity<>(tree, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/vote", method = RequestMethod.POST)
-    public ResponseEntity<Tree> voteForTree(@PathVariable String id) {
-        Tree updatedTree = treeService.voteForTree(id);
+    @RequestMapping(value = "/{id}/up", method = RequestMethod.POST)
+    public ResponseEntity<Tree> voteUpForTree(@PathVariable String id) {
+        Tree updatedTree = treeService.voteUpForTree(id);
         return new ResponseEntity<>(updatedTree, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/{id}/down", method = RequestMethod.POST)
+    public ResponseEntity<Tree> voteDownForTree(@PathVariable String id) {
+        Tree updatedTree = treeService.voteDownForTree(id);
+        return new ResponseEntity<>(updatedTree, HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Tree>> getTreesByVotes() {
