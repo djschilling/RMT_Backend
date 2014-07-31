@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<button onclick="test()">Test</button>
+<button onclick="test2()">Test</button>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function test(){
+            $.ajax({
+                url: "http://localhost:8080/api/logout",
+                context: document.body,
+                success: function(data){
+                    alert(data);
+                    console.log(data);
+                }
+            });
+
+        }
+        function test2(){
+            $.ajax({
+                url: "http://localhost:8080/api/login",
+                context: document.body,
+                success: function(data){
+                    alert(data);
+                    console.log(data);
+                }
+                ,beforeSend: function (xhr) {
+                    xhr.setRequestHeader ("Authorization", "Basic dGVzdDp0ZXN0");
+                }
+            });
+
+        }
+
+
+    </script>
+
+</body>
+</html>
