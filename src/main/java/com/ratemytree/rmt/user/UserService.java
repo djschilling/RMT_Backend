@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserService extends UserDetailsService{
 
-    void createUser(String username, String email, String password);
+    void createUser(String username, String password);
 
     public User getCurrentlyLoggedIn();
 

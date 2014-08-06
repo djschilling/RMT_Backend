@@ -39,7 +39,7 @@ public class TreeServiceImplTest {
         incrementedVotesTree.incrementVotesUp();
         when(treeRepositoryMock.findOne("5")).thenReturn(tree);
         when(treeRepositoryMock.save(incrementedVotesTree)).thenReturn(incrementedVotesTree);
-        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(new User("foo", "foo@bar.de", "bar"));
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(new User("foo", "bar"));
 
         Tree updatedTree = sut.voteForTree("5", true);
 

@@ -24,13 +24,9 @@ public class User implements UserDetails {
     @Field
     private String password;
 
-    @Field
-    private String email;
-
-    public User(String username, String email, String password) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.email = email;
     }
 
     public User() {
@@ -60,14 +56,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     @Override

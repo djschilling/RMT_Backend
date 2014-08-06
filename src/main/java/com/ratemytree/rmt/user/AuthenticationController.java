@@ -33,7 +33,7 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public HttpEntity createUser(@RequestBody User user) {
-        userService.createUser(user.getUsername(), user.getEmail(), user.getPassword());
+        userService.createUser(user.getUsername(), user.getPassword());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
