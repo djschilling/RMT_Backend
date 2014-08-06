@@ -2,6 +2,8 @@ package com.ratemytree.rmt.tree;
 
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -23,12 +25,15 @@ public class Tree {
     @Field
     private DBObject content;
 
+    private List<TreeVote> voters;
+
 
     public Tree() {
-        //default constructor needed
+        voters = new ArrayList<>();
     }
 
     public Tree(String content, String creator) {
+        this();
         this.content = (DBObject)JSON.parse(content);
         this.creator = creator;
     }
@@ -59,6 +64,14 @@ public class Tree {
 
     public String getCreator() {
         return creator;
+    }
+
+
+    public void addVoter(TreeVote treeVote){
+        if (voters.contains(treeVote)) {
+            throw new VoterException("Voting can only be done one time per user.");
+        }
+        voters.add(treeVote);
     }
 
     @Override
@@ -93,6 +106,15 @@ public class Tree {
                 ", votesDown=" + votesDown +
                 ", content=" + content +
                 '}';
+    }
+
+    public TreeVote getVoteForUser(String username) {
+        for (TreeVote voter : voters) {
+            if (voter.getUsername().equals(username)) {
+                return voter;
+            }
+        }
+        return null;
     }
 }
 

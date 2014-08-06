@@ -40,13 +40,13 @@ public class TreeController {
 
     @RequestMapping(value = "/{id}/up", method = RequestMethod.POST)
     public ResponseEntity<Tree> voteUpForTree(@PathVariable String id) {
-        Tree updatedTree = treeService.voteUpForTree(id);
+        Tree updatedTree = treeService.voteForTree(id, true);
         return new ResponseEntity<>(updatedTree, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}/down", method = RequestMethod.POST)
     public ResponseEntity<Tree> voteDownForTree(@PathVariable String id) {
-        Tree updatedTree = treeService.voteDownForTree(id);
+        Tree updatedTree = treeService.voteForTree(id, false);
         return new ResponseEntity<>(updatedTree, HttpStatus.OK);
     }
 
@@ -55,5 +55,11 @@ public class TreeController {
     public ResponseEntity<List<Tree>> getTreesByVotes() {
         List<Tree> trees = treeService.findTreesByVotes();
         return new ResponseEntity<>(trees, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/myvote", method = RequestMethod.GET)
+    public ResponseEntity<TreeVote> getMyVote(@PathVariable String id){
+        TreeVote treeVote = treeService.getCurrentUserVote(id);
+        return new ResponseEntity<>(treeVote, HttpStatus.OK);
     }
 }

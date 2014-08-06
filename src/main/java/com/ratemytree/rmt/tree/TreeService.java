@@ -13,9 +13,9 @@ public interface TreeService {
 
     Tree findById(String id);
 
-    Tree voteUpForTree(String id);
-
-    Tree voteDownForTree(String id);
+    Tree voteForTree(String id, boolean up);
 
     List<Tree> findTreesByVotes();
+
+    TreeVote getCurrentUserVote(String treeId);
 }
