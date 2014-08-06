@@ -25,16 +25,16 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public HttpEntity<User> login(Principal principal) {
+    public HttpEntity<UserDTO> login(Principal principal) {
 
-        User userDTO = (User)((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        User user = (User)((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public HttpEntity createUser(@RequestBody User user) {
-        userService.createUser(user.getUsername(), user.getPassword());
-        return new ResponseEntity(HttpStatus.CREATED);
+    public HttpEntity<UserDTO> createUser(@RequestBody UserPasswordDTO userPasswordDTO) {
+        User user = userService.createUser(userPasswordDTO.getUsername(), userPasswordDTO.getPassword());
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
     }
 
 }
