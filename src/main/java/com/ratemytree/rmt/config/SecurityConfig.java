@@ -32,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private LogoutSuccessHandler basicLogoutSuccessHandler;
 
+    @Autowired
+    private BasicAuthenticationEntryPoint basicAuthenticationEntryPoint;
 
     @Bean
     @Override
@@ -54,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.
                csrf().
                     disable().
-               httpBasic().
+               httpBasic().authenticationEntryPoint(basicAuthenticationEntryPoint).
                     and().
                logout().
                     logoutUrl("/api/logout").logoutSuccessHandler(basicLogoutSuccessHandler).
