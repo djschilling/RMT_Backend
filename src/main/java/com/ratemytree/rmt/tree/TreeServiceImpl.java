@@ -4,6 +4,7 @@ import com.ratemytree.rmt.restapi.EntryNotFoundException;
 import com.ratemytree.rmt.user.User;
 import com.ratemytree.rmt.user.UserService;
 import java.util.List;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Tree create(String content) {
-        return treeRepository.save(new Tree(content, userService.getCurrentlyLoggedIn().getUsername()));
+        return treeRepository.save(new Tree(content, userService.getCurrentlyLoggedIn().getUsername(), new DateTime()));
     }
 
     @Override

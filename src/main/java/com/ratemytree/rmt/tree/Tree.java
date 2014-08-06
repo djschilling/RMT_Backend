@@ -4,6 +4,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -24,6 +25,8 @@ public class Tree {
     private int votesDown;
     @Field
     private DBObject content;
+    @Field
+    private DateTime created;
 
     private List<TreeVote> voters;
 
@@ -32,10 +35,11 @@ public class Tree {
         voters = new ArrayList<>();
     }
 
-    public Tree(String content, String creator) {
+    public Tree(String content, String creator, DateTime created) {
         this();
         this.content = (DBObject)JSON.parse(content);
         this.creator = creator;
+        this.created = created;
     }
 
     public int incrementVotesUp() {
@@ -66,6 +70,9 @@ public class Tree {
         return creator;
     }
 
+    public Long getCreated() {
+        return created.getMillis();
+    }
 
     public void addVoter(TreeVote treeVote){
         if (voters.contains(treeVote)) {
