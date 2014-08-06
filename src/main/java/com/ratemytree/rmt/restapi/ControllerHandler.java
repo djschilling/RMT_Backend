@@ -1,6 +1,7 @@
 package com.ratemytree.rmt.restapi;
 
 import com.ratemytree.rmt.tree.VoterException;
+import com.ratemytree.rmt.user.UserServiceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,13 @@ public class ControllerHandler {
 
         return new ResponseEntity<>(e.getMessage(), CONFLICT);
     }
+
+    @ExceptionHandler(UserServiceException.class)
+    ResponseEntity<String> userService(UserServiceException e) {
+
+        return new ResponseEntity<>(e.getMessage(), CONFLICT);
+    }
+
 
     @ExceptionHandler(EntryNotFoundException.class)
     ResponseEntity<String> entryNotFound(EntryNotFoundException e) {

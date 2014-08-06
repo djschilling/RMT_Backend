@@ -30,7 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(String username, String email, String password) {
-        userRepository.save(new User(username, email, password));
+        User user = userRepository.findByUsername(username);
+        if(user == null) {
+            userRepository.save(new User(username, email, password));
+        } else {
+            throw new UserServiceException("User with name " + username + " already exists.");
+        }
     }
 
     @Override
