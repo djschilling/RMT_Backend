@@ -69,4 +69,10 @@ public class TreeServiceImpl implements TreeService {
         }
         return treeVote;
     }
+
+    @Override
+    public List<Tree> findByCreator(String creator) {
+
+        return treeRepository.findByCreator(creator);
+    }
 }

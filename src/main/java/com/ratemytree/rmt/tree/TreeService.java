@@ -18,4 +18,6 @@ public interface TreeService {
     List<Tree> findTreesByVotes();
 
     TreeVote getCurrentUserVote(String treeId);
+
+    List<Tree> findByCreator(String creator);
 }
