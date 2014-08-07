@@ -1,4 +1,4 @@
-package com.ratemytree.rmt.tree;
+package com.ratemytree.rmt;
 
 /**
  * David Schilling - davejs92@gmail.com

@@ -1,8 +1,8 @@
 package com.ratemytree.rmt.tree;
 
-import com.ratemytree.rmt.restapi.EntryNotFoundException;
+import com.ratemytree.rmt.EntryNotFoundException;
+import com.ratemytree.rmt.user.AuthenticationService;
 import com.ratemytree.rmt.user.User;
-import com.ratemytree.rmt.user.UserService;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +16,17 @@ import org.springframework.stereotype.Service;
 public class TreeServiceImpl implements TreeService {
 
     private final TreeRepository treeRepository;
-    private final UserService userService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public TreeServiceImpl(TreeRepository treeRepository, UserService userService) {
+    public TreeServiceImpl(TreeRepository treeRepository, AuthenticationService authenticationService) {
         this.treeRepository = treeRepository;
-        this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     @Override
     public Tree create(String content) {
-        return treeRepository.save(new Tree(content, userService.getCurrentlyLoggedIn().getUsername(), new DateTime()));
+        return treeRepository.save(new Tree(content, authenticationService.getCurrentlyLoggedIn().getUsername(), new DateTime()));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class TreeServiceImpl implements TreeService {
     @Override
     public Tree voteForTree(String id, boolean up) {
         Tree tree = treeRepository.findOne(id);
-        User currentUser = userService.getCurrentlyLoggedIn();
+        User currentUser = authenticationService.getCurrentlyLoggedIn();
         tree.addVoter(new TreeVote(currentUser.getUsername(), up));
         if(up){
             tree.incrementVotesUp();
@@ -61,7 +61,7 @@ public class TreeServiceImpl implements TreeService {
     @Override
     public TreeVote getCurrentUserVote(String treeId) {
         Tree tree = treeRepository.findOne(treeId);
-        User currentUser = userService.getCurrentlyLoggedIn();
+        User currentUser = authenticationService.getCurrentlyLoggedIn();
 
         TreeVote treeVote = tree.getVoteForUser(currentUser.getUsername());
         if(treeVote == null) {

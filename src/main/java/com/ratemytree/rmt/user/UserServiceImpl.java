@@ -1,5 +1,8 @@
 package com.ratemytree.rmt.user;
 
+import com.ratemytree.rmt.tree.Tree;
+import com.ratemytree.rmt.tree.TreeService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +16,12 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final TreeService treeService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, TreeService treeService) {
         this.userRepository = userRepository;
+        this.treeService = treeService;
     }
 
     @Override
@@ -38,9 +43,16 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
     @Override
-    public User getCurrentlyLoggedIn() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public UserStatistics getUserStatistics(String username) {
+        List<Tree> trees = treeService.findByCreator(username);
+        UserStatistics userStatistics = new UserStatistics(trees.size());
+        for (Tree tree : trees) {
+            userStatistics.addUpVotes(tree.getVotesUp());
+            userStatistics.addDownVotes(tree.getVotesDown());
+        }
+        return userStatistics;
     }
 
 }

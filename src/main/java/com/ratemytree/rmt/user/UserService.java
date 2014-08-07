@@ -10,6 +10,6 @@ public interface UserService extends UserDetailsService {
 
     User createUser(String username, String password);
 
-    public User getCurrentlyLoggedIn();
+    UserStatistics getUserStatistics(String username);
 
 }

@@ -41,4 +41,10 @@ public class UserController {
         List<Tree> trees = treeService.findByCreator(username);
         return new ResponseEntity<>(trees, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+    public HttpEntity<UserStatistics> getUserStatistics(@PathVariable String username) {
+        UserStatistics userStatistics = userService.getUserStatistics(username);
+        return new ResponseEntity<>(userStatistics, HttpStatus.OK);
+    }
 }

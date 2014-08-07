@@ -2,6 +2,7 @@ package com.ratemytree.rmt.tree;
 
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import com.ratemytree.rmt.VoterException;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;

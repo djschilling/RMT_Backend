@@ -1,6 +1,7 @@
 package com.ratemytree.rmt.restapi;
 
-import com.ratemytree.rmt.tree.VoterException;
+import com.ratemytree.rmt.EntryNotFoundException;
+import com.ratemytree.rmt.VoterException;
 import com.ratemytree.rmt.user.UserServiceException;
 import java.util.List;
 import org.springframework.http.HttpEntity;

@@ -1,5 +1,6 @@
 package com.ratemytree.rmt.tree;
 
+import com.ratemytree.rmt.user.AuthenticationService;
 import com.ratemytree.rmt.user.User;
 import com.ratemytree.rmt.user.UserService;
 import org.junit.Before;
@@ -24,11 +25,11 @@ public class TreeServiceImplTest {
     private TreeRepository treeRepositoryMock;
 
     @Mock
-    private UserService userServiceMock;
+    private AuthenticationService authenticationService;
 
     @Before
     public void setUp() throws Exception {
-        sut = new TreeServiceImpl(treeRepositoryMock, userServiceMock);
+        sut = new TreeServiceImpl(treeRepositoryMock, authenticationService);
 
     }
 
@@ -39,7 +40,7 @@ public class TreeServiceImplTest {
         incrementedVotesTree.incrementVotesUp();
         when(treeRepositoryMock.findOne("5")).thenReturn(tree);
         when(treeRepositoryMock.save(incrementedVotesTree)).thenReturn(incrementedVotesTree);
-        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(new User("foo", "bar"));
+        when(authenticationService.getCurrentlyLoggedIn()).thenReturn(new User("foo", "bar"));
 
         Tree updatedTree = sut.voteForTree("5", true);
 
