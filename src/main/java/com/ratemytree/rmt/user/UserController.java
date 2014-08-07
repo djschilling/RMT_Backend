@@ -1,5 +1,6 @@
 package com.ratemytree.rmt.user;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public HttpEntity<UserDTO> createUser(@RequestBody UserPasswordDTO userPasswordDTO) {
+    public HttpEntity<UserDTO> createUser(@RequestBody @Valid UserPasswordDTO userPasswordDTO) {
         User user = userService.createUser(userPasswordDTO.getUsername(), userPasswordDTO.getPassword());
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
     }
-
 }
