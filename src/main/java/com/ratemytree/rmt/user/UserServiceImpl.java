@@ -4,7 +4,6 @@ import com.ratemytree.rmt.tree.Tree;
 import com.ratemytree.rmt.tree.TreeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -54,5 +53,4 @@ public class UserServiceImpl implements UserService {
         }
         return userStatistics;
     }
-
 }

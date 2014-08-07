@@ -6,8 +6,12 @@ import com.ratemytree.rmt.user.User;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -44,7 +48,7 @@ public class TreeServiceImpl implements TreeService {
         Tree tree = treeRepository.findOne(id);
         User currentUser = authenticationService.getCurrentlyLoggedIn();
         tree.addVoter(new TreeVote(currentUser.getUsername(), up));
-        if(up){
+        if (up) {
             tree.incrementVotesUp();
         } else {
             tree.incrementVotesDown();
@@ -54,8 +58,18 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public List<Tree> findTreesByVotes() {
-        Sort votesSort = new Sort(Sort.Direction.DESC, "votesUp");
-        return treeRepository.findAll(votesSort);
+
+        return findTrees("votesUp", 100);
+    }
+
+    @Override
+    public List<Tree> findTrees(String orderBy, int limit) {
+        if (Tree.getPossibleOrders().contains(orderBy)) {
+            Pageable pageable = new PageRequest(0, limit, new Sort(DESC, orderBy));
+            return treeRepository.findAll(pageable).getContent();
+        }
+        throw new IllegalArgumentException("orderBy: " + orderBy + " is not possible. Possible are: " +
+                Tree.getPossibleOrders());
     }
 
     @Override
@@ -64,7 +78,7 @@ public class TreeServiceImpl implements TreeService {
         User currentUser = authenticationService.getCurrentlyLoggedIn();
 
         TreeVote treeVote = tree.getVoteForUser(currentUser.getUsername());
-        if(treeVote == null) {
+        if (treeVote == null) {
             throw new EntryNotFoundException("Not vote for user " + currentUser.getUsername());
         }
         return treeVote;

@@ -17,6 +17,8 @@ public interface TreeService {
 
     List<Tree> findTreesByVotes();
 
+    List<Tree> findTrees(String orderBy, int limit);
+
     TreeVote getCurrentUserVote(String treeId);
 
     List<Tree> findByCreator(String creator);

@@ -41,6 +41,13 @@ public class ControllerHandler {
         return new ResponseEntity<>(e.getMessage(), NOT_FOUND);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<String> illegalArgument(IllegalArgumentException e) {
+
+        return new ResponseEntity<>(e.getMessage(), BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     HttpEntity<ValidationErrorDTO> processValidationError(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();

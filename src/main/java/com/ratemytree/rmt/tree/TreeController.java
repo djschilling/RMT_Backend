@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -54,6 +55,12 @@ public class TreeController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Tree>> getTreesByVotes() {
         List<Tree> trees = treeService.findTreesByVotes();
+        return new ResponseEntity<>(trees, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET, params = {"limit", "orderBy"})
+    public ResponseEntity<List<Tree>> getTrees(@RequestParam int limit, @RequestParam String orderBy) {
+        List<Tree> trees = treeService.findTrees(orderBy, limit);
         return new ResponseEntity<>(trees, HttpStatus.OK);
     }
 

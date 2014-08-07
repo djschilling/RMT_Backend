@@ -10,6 +10,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import static java.util.Arrays.asList;
+
 /**
  * David Schilling - davejs92@gmail.com
  */
@@ -80,6 +82,10 @@ public class Tree {
             throw new VoterException("Voting can only be done one time per user.");
         }
         voters.add(treeVote);
+    }
+
+    public static List<String> getPossibleOrders() {
+        return asList("votesUp", "votesDown", "created");
     }
 
     @Override
