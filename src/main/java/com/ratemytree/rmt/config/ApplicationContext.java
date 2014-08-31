@@ -28,6 +28,7 @@ public class ApplicationContext {
 
     @Bean
     public SwaggerSpringMvcPlugin customImplementation() {
+        this.springSwaggerConfig.defaultSwaggerPathProvider().setApiResourcePrefix("api");
         return new SwaggerSpringMvcPlugin(this.springSwaggerConfig)
                 .apiInfo(apiInfo());
 
