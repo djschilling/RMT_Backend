@@ -40,7 +40,11 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Tree findById(String id) {
-        return treeRepository.findOne(id);
+        Tree tree = treeRepository.findOne(id);
+        if (tree == null) {
+            throw new EntityNotFoundException("Tree with id " + id + " does not exist.");
+        }
+        return tree;
     }
 
     @Override
