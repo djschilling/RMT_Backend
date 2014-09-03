@@ -1,6 +1,6 @@
 package com.ratemytree.rmt.tree;
 
-import com.ratemytree.rmt.EntryNotFoundException;
+import com.ratemytree.rmt.EntityNotFoundException;
 import com.ratemytree.rmt.user.AuthenticationService;
 import com.ratemytree.rmt.user.User;
 import java.util.List;
@@ -79,7 +79,7 @@ public class TreeServiceImpl implements TreeService {
 
         TreeVote treeVote = tree.getVoteForUser(currentUser.getUsername());
         if (treeVote == null) {
-            throw new EntryNotFoundException("Not vote for user " + currentUser.getUsername());
+            throw new EntityNotFoundException("No votes for user " + currentUser.getUsername());
         }
         return treeVote;
     }

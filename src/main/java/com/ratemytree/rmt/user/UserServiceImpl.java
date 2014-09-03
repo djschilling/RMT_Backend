@@ -1,5 +1,6 @@
 package com.ratemytree.rmt.user;
 
+import com.ratemytree.rmt.EntityNotFoundException;
 import com.ratemytree.rmt.tree.Tree;
 import com.ratemytree.rmt.tree.TreeService;
 import java.util.List;
@@ -45,12 +46,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserStatistics getUserStatistics(String username) {
-        List<Tree> trees = treeService.findByCreator(username);
-        UserStatistics userStatistics = new UserStatistics(trees.size());
-        for (Tree tree : trees) {
-            userStatistics.addUpVotes(tree.getVotesUp());
-            userStatistics.addDownVotes(tree.getVotesDown());
+        try {
+            loadUserByUsername(username);
+            List<Tree> trees = treeService.findByCreator(username);
+            UserStatistics userStatistics = new UserStatistics(trees.size());
+            for (Tree tree : trees) {
+                userStatistics.addUpVotes(tree.getVotesUp());
+                userStatistics.addDownVotes(tree.getVotesDown());
+            }
+            return userStatistics;
+
+        } catch (UsernameNotFoundException e) {
+            throw new EntityNotFoundException(e.getMessage());
         }
-        return userStatistics;
     }
 }

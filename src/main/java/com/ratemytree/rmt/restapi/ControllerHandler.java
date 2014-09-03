@@ -1,6 +1,6 @@
 package com.ratemytree.rmt.restapi;
 
-import com.ratemytree.rmt.EntryNotFoundException;
+import com.ratemytree.rmt.EntityNotFoundException;
 import com.ratemytree.rmt.VoterException;
 import com.ratemytree.rmt.user.UserServiceException;
 import java.util.List;
@@ -35,8 +35,8 @@ public class ControllerHandler {
     }
 
 
-    @ExceptionHandler(EntryNotFoundException.class)
-    ResponseEntity<String> entryNotFound(EntryNotFoundException e) {
+    @ExceptionHandler(EntityNotFoundException.class)
+    ResponseEntity<String> entryNotFound(EntityNotFoundException e) {
 
         return new ResponseEntity<>(e.getMessage(), NOT_FOUND);
     }
